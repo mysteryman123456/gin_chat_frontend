@@ -18,15 +18,17 @@ export default function ThemeProvider({
 }) {
   const [theme, setTheme] = useState<Theme>("light");
   useEffect(() => {
-    const themeValue = localStorage.getItem("theme");
-    if (!themeValue || !["light", "dark"].includes(themeValue)) {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme === "light" || storedTheme === "dark") {
+      setTheme(storedTheme);
+    } else {
       setTheme("light");
     }
-    setTheme(theme);
   }, []);
   useEffect(() => {
     document.body.classList.remove("dark", "light");
     document.body.classList.add(theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));

@@ -1,60 +1,64 @@
 "use client";
+
+import FormInput from "@/app/_components/FormInput";
+import { LoginSchemaType, login_schema } from "@/app/_validations/login_schema";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
-import z from "zod";
-
-const loginSchema = z.object({
-  email: z
-    .string({ error: "Password is required" })
-    .min(3, "Email is required"),
-  password: z
-    .string({ error: "Password is required" })
-    .min(3, "Passwrord is required"),
-});
-
-type Login = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const {
-    formState: { isDirty, isSubmitting, errors },
     register,
-    reset,
     handleSubmit,
-  } = useForm<Login>({
-    resolver: zodResolver(loginSchema),
+    formState: { errors },
+  } = useForm<LoginSchemaType>({
+    resolver: zodResolver(login_schema),
   });
 
-  const handleFormSubmit = (data: Login) => {
-    alert(data);
+  const onSubmit = (data: LoginSchemaType) => {
+    console.log(data);
   };
 
   return (
     <form
-      className="flex flex-col gap-1 max-w-sm"
-      onSubmit={handleSubmit(handleFormSubmit)}
+      autoComplete="off"
+      onSubmit={handleSubmit(onSubmit)}
+      className=" max-w-sm mx-auto space-y-4 p-6"
     >
-      <label htmlFor="email">Email</label>
-      <Input
-        placeholder="Email is required"
-        {...register("email")}
-        name="email"
-      />
-      {errors.email && (
-        <span className="text-sm text-red-600">{errors.email.message}</span>
-      )}
+      <h2 className="text-2xl font-semibold">Welcome back</h2>
+      <p className="text-sm text-gray-500">Login into your account</p>
 
-      <label htmlFor="password">Password</label>
-      <Input
-        placeholder="Password is required"
-        {...register("password")}
-        name="password"
+      <FormInput
+        type="email"
+        label="Email"
+        placeholder="Enter your email"
+        {...register("email")}
+        error={errors.email}
       />
-      {errors.password && (
-        <span className="text-sm text-red-600">{errors.password.message}</span>
-      )}
-      <Button disabled={isSubmitting}>Login</Button>
+
+      <FormInput
+        type="password"
+        label="Password"
+        placeholder="Enter your password"
+        {...register("password")}
+        error={errors.password}
+      />
+
+      <p className="-mt-2 mb-2 text-right">
+        <Link href="/forgot-password" className="text-xs text-muted-foreground">
+          Forgot your password?
+        </Link>
+      </p>
+
+      <Button className="w-full">Login</Button>
+
+      <p className="text-center text-sm">
+        Don't have an account?{" "}
+        <Link href="/signup" className="font-semibold cursor-pointer">
+          Sign up
+        </Link>
+      </p>
     </form>
   );
 }
