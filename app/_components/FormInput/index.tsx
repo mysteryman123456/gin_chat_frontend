@@ -11,9 +11,9 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 
 export default function FormInput({ label, error, ...props }: Props) {
   return (
-    <div className="space-y-1">
+    <div>
       <label className="text-sm font-medium">{label}</label>
-      <Input {...props} />
+      <Input autoComplete="off" {...props} />
       {error && <p className="text-sm text-red-700">{error.message}</p>}
     </div>
   );

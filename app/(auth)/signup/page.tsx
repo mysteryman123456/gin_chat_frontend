@@ -25,7 +25,7 @@ export default function SignUp() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white max-w-sm mx-auto space-y-4 p-6"
+      className=" max-w-sm mx-auto space-y-4 p-6"
     >
       <h2 className="text-2xl font-semibold">Create your account</h2>
       <p className="text-sm text-gray-500">

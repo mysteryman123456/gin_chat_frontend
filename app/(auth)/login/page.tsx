@@ -22,13 +22,12 @@ export default function Login() {
 
   return (
     <form
+      autoComplete="off"
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white max-w-sm mx-auto space-y-4 p-6"
+      className=" max-w-sm mx-auto space-y-4 p-6"
     >
       <h2 className="text-2xl font-semibold">Welcome back</h2>
-      <p className="text-sm text-gray-500">
-        Login to Nepal&apos;s top secure chat application
-      </p>
+      <p className="text-sm text-gray-500">Login into your account</p>
 
       <FormInput
         type="email"
@@ -46,11 +45,17 @@ export default function Login() {
         error={errors.password}
       />
 
+      <p className="-mt-2 mb-2 text-right">
+        <Link href="/forgot-password" className="text-xs text-muted-foreground">
+          Forgot your password?
+        </Link>
+      </p>
+
       <Button className="w-full">Login</Button>
 
       <p className="text-center text-sm">
-        Don&apos;t have an account?{" "}
-        <Link href={"/signup"} className="font-semibold cursor-pointer">
+        Don't have an account?{" "}
+        <Link href="/signup" className="font-semibold cursor-pointer">
           Sign up
         </Link>
       </p>

@@ -26,7 +26,7 @@ export default function ResetPassword() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white max-w-sm mx-auto space-y-3 p-6"
+      className=" max-w-sm mx-auto space-y-3 p-6"
     >
       <h2 className="text-2xl font-semibold">Reset Password</h2>
 
@@ -58,8 +58,8 @@ export default function ResetPassword() {
       <Button className="w-full">Reset</Button>
 
       <p className="text-center text-sm">
-        Remember your password?{" "}
-        <Link href="/login" className="font-semibold">
+        Remember your password?
+        <Link href="/login" className="ml-1 font-semibold">
           Login
         </Link>
       </p>
