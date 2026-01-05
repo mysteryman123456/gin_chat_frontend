@@ -1,12 +1,22 @@
 "use client";
 
-import Link from "next/link";
+import Sidebar from "./_components/ChatSideBar";
+import ChatSection from "./_components/ChatSection";
 
-export default function page() {
+export type User = {
+  id: number;
+  name: string;
+  avatar: string;
+  online: boolean;
+  lastMessage: string;
+  time: string;
+};
+
+export default function ChatLayout() {
   return (
-    <>
-      <h2>Welcome ot home page of gin chat</h2>
-      <Link href={"/signup"}>Signup</Link>
-    </>
+    <div className="flex h-screen border-gray-200 dark:border-neutral-900 border-t">
+      <Sidebar />
+      <ChatSection />
+    </div>
   );
 }
