@@ -3,9 +3,11 @@
 import FormInput from "@/app/_components/FormInput";
 import { LoginSchemaType, login_schema } from "@/app/_validations/login_schema";
 import { Button } from "@/components/ui/button";
+import { login } from "@/lib/api/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const {
@@ -16,8 +18,18 @@ export default function Login() {
     resolver: zodResolver(login_schema),
   });
 
-  const onSubmit = (data: LoginSchemaType) => {
-    console.log(data);
+  const onSubmit = async (data: LoginSchemaType) => {
+    try {
+      const response = await login(data);
+      if (response.success) {
+        toast.success(response?.message || "User logged in successfully");
+        return (window.location.href = "/");
+      }
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to login";
+      return toast.error(errorMessage);
+    }
   };
 
   return (

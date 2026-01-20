@@ -1,16 +1,6 @@
 "use client";
-
-import Sidebar from "./_components/ChatSideBar";
 import ChatSection from "./_components/ChatSection";
-
-export type User = {
-  id: number;
-  name: string;
-  avatar: string;
-  online: boolean;
-  lastMessage: string;
-  time: string;
-};
+import Sidebar from "./_components/ChatSideBar";
 
 export default function ChatLayout() {
   return (

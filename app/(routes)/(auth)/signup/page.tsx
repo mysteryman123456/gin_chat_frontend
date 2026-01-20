@@ -5,9 +5,11 @@ import {
   signup_schema,
 } from "@/app/_validations/signup_schema";
 import { Button } from "@/components/ui/button";
+import { signup } from "@/lib/api/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const {
@@ -18,8 +20,17 @@ export default function SignUp() {
     resolver: zodResolver(signup_schema),
   });
 
-  const onSubmit = (data: SignupSchemaType) => {
-    console.log(data);
+  const onSubmit = async (data: SignupSchemaType) => {
+    try {
+      const response = await signup(data);
+      if (response.success) {
+        return toast.success(response?.message || "Registered successfully");
+      }
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to register";
+      return toast.error(errorMessage);
+    }
   };
 
   return (
