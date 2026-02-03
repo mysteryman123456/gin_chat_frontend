@@ -21,7 +21,6 @@ export const signup = async (data: SignupSchemaType) => {
 
 export const verifyToken = async () => {
   try {
-    await new Promise((res) => setTimeout(res, 3000));
     const response = await api.get(API_END_POINT.VERIFY_TOKEN);
     return response.data;
   } catch (error: unknown) {
@@ -45,5 +44,21 @@ export const login = async (data: LoginSchemaType) => {
       throw new Error(errorMessage);
     }
     throw new Error("Login failed");
+  }
+};
+
+export const logout = async () => {
+  try {
+    const response = await api.post(API_END_POINT.LOGOUT);
+    if (response.status === 200) {
+      return (window.location.href = "/");
+    }
+  } catch (error: unknown) {
+    if (isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data.error || error.response?.data.message;
+      throw new Error(errorMessage);
+    }
+    throw new Error("Logout failed");
   }
 };

@@ -5,7 +5,7 @@ export type User = {
   username: string;
   profile_image: string | null;
   role: string;
-  id: string;
+  _id: string;
   email: string;
 };
 
