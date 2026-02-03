@@ -9,7 +9,7 @@ import { useAuthStore } from "@/app/hooks/useAuth";
 export default function ChatNavbar() {
   const { isAuthenticated, loading, user } = useAuthStore();
   return (
-    <nav className="w-full bg-gray-50/60 dark:bg-[#2b2d31] shadow-xs px-4 py-3 flex items-center justify-between">
+    <nav className="w-full bg-gray-50/60 dark:bg-[#2b2d31] shadow-xs px-4 py-3 flex items-center justify-between border-gray-200 dark:border-neutral-900 border-b">
       <Link href={"/"} className="flex items-center mr-5">
         <Image src="/logo.png" alt="logo" width={40} height={40} />
         <span className="text-lg font-semibold">GinChat</span>
