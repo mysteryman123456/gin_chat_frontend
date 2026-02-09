@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import FormInput from "../FormInput";
+import FormInput from "../../FormInput";
 import DragAndDrop from "../DragDrop";
 import { useAuthStore } from "@/app/hooks/useAuth";
 import { useState } from "react";
