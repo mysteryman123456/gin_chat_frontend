@@ -1,8 +1,11 @@
 import api from "./axios";
 
-export const fetcher = async <T>(relativeUrl: string): Promise<T> => {
+export const fetcher = async <T>(
+  relativeUrl: string,
+  page: number = 1
+): Promise<T> => {
   try {
-    const res = await api.get(`${relativeUrl}`, {
+    const res = await api.get(`${relativeUrl}?page=${page}`, {
       withCredentials: true,
     });
     return res.data.data;

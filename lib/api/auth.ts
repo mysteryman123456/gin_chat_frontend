@@ -62,3 +62,38 @@ export const logout = async () => {
     throw new Error("Logout failed");
   }
 };
+
+export const forgotPassword = async (email: string) => {
+  try {
+    const response = await api.post(API_END_POINT.FORGOT_PASSWORD, { email });
+    return response.data;
+  } catch (error: unknown) {
+    if (isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data.error || error.response?.data.message;
+      throw new Error(errorMessage);
+    }
+    throw new Error("Operation failed");
+  }
+};
+
+export const resetPassword = async (
+  password: string,
+  otp: string,
+  token: string
+) => {
+  try {
+    const response = await api.post(
+      `${API_END_POINT.RESET_PASSWORD}?token=${token}`,
+      { otp, password }
+    );
+    return response.data;
+  } catch (error: unknown) {
+    if (isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data.error || error.response?.data.message;
+      throw new Error(errorMessage);
+    }
+    throw new Error("Operation failed");
+  }
+};

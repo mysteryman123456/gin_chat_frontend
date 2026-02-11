@@ -2,11 +2,13 @@ import { isAxiosError } from "axios";
 import api from "./axios";
 import { API_END_POINT } from "./endpoints";
 
-export const uploadImage = async (file: File) => {
+export type SendFileType = "AUDIO" | "VIDEO" | "FILE" | "IMAGE" | "TEXT";
+
+export const uploadFile = async (file: File) => {
   try {
     const formData = new FormData();
-    formData.append("image", file);
-    const response = await api.post(API_END_POINT.UPLOAD_IMAGE, formData, {});
+    formData.append("file", file);
+    const response = await api.post(API_END_POINT.UPLOAD_FILE, formData, {});
 
     return response.data;
   } catch (error: unknown) {

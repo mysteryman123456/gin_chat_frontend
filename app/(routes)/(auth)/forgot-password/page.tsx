@@ -6,24 +6,35 @@ import {
   forgot_password_schema,
 } from "@/app/_validations/forgot_password_schema";
 import { Button } from "@/components/ui/button";
+import { forgotPassword } from "@/lib/api/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function ForgotPassword() {
-  const { push } = useRouter();
+  const { replace } = useRouter();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ForgotPasswordSchemaType>({
     resolver: zodResolver(forgot_password_schema),
   });
 
-  const onSubmit = (data: ForgotPasswordSchemaType) => {
-    push(`/reset-password?email=${data.email}`);
+  const onSubmit = async (data: ForgotPasswordSchemaType) => {
+    try {
+      const response = await forgotPassword(data.email);
+      if (response.success && response.data.token) {
+        toast.success(response.message || "Please check your email");
+        return replace(`/reset-password?token=${response?.data?.token}`);
+      }
+      return toast.error("If email exsits, otp is sent");
+    } catch (e: any) {
+      return toast.error(e.message);
+    }
   };
 
   return (
@@ -45,7 +56,9 @@ export default function ForgotPassword() {
         error={errors.email}
       />
 
-      <Button className="w-full">Send OTP</Button>
+      <Button disabled={isSubmitting} className="w-full">
+        Send OTP
+      </Button>
 
       <p className="text-center text-sm">
         Remember your password?{" "}
