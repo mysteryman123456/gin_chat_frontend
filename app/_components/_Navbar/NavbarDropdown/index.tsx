@@ -32,7 +32,6 @@ export default function NavbarDropdown({
   isAuthenticated,
   user,
 }: NavbarDropdownProps) {
-  console.log(user);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

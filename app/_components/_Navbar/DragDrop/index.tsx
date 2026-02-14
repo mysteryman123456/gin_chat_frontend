@@ -1,7 +1,7 @@
 "use client";
 
-import { uploadImage } from "@/lib/api/upload";
-import { ImagePlus, X } from "lucide-react";
+import { uploadFile } from "@/lib/api/upload";
+import { ImagePlus } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -38,8 +38,8 @@ export default function DragAndDrop({ onChange }: DragAndDropProps) {
       setLoading(true);
       const tempPreview = URL.createObjectURL(file);
       setPreview(tempPreview);
-      const res = await uploadImage(file);
-      const imageUrl = res.data.image_url;
+      const res = await uploadFile(file);
+      const imageUrl = res.data.file_url;
       setPreview(imageUrl);
       onChange(imageUrl);
     } catch (err: any) {
@@ -58,7 +58,7 @@ export default function DragAndDrop({ onChange }: DragAndDropProps) {
         flex flex-col items-center gap-2
         rounded-xl p-4 border-2 border-dashed
         ${loading ? "opacity-60 pointer-events-none" : ""}
-        border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20
+        border-indigo-900 bg-indigo-50 dark:bg-indigo-900/20
       `}
     >
       <input

@@ -5,6 +5,7 @@ import NotificationButton from "../NotifcationButton";
 import Link from "next/link";
 import NavbarDropdown from "../NavbarDropdown";
 import { useAuthStore } from "@/app/hooks/useAuth";
+import { SearchUserDialog } from "../SearchUserDialog";
 
 export default function ChatNavbar() {
   const { isAuthenticated, loading, user } = useAuthStore();
@@ -16,6 +17,7 @@ export default function ChatNavbar() {
       </Link>
 
       <div className="flex items-center space-x-2">
+        {isAuthenticated && !loading && <SearchUserDialog />}
         <NotificationButton />
         <ThemeButton />
         <NavbarDropdown
