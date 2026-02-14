@@ -6,27 +6,46 @@ import {
   reset_password_schema,
 } from "@/app/_validations/reset_password_schema";
 import { Button } from "@/components/ui/button";
+import { resetPassword } from "@/lib/api/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function ResetPassword() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ResetPasswordSchemaType>({
     resolver: zodResolver(reset_password_schema),
   });
 
-  const onSubmit = (data: ResetPasswordSchemaType) => {
-    console.log(data);
+  const searchParams = useSearchParams();
+
+  const router = useRouter();
+
+  const onSubmit = async (data: ResetPasswordSchemaType) => {
+    try {
+      const response = await resetPassword(
+        data.password,
+        data.otp,
+        searchParams.get("token") || "n/a"
+      );
+      if (response.success) {
+        router.replace("/login");
+        return toast.success(response.message || "Password reset successfully");
+      }
+    } catch {
+      toast.error("Failed to reset password");
+    }
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className=" max-w-sm mx-auto space-y-3 p-6"
+      className="max-w-sm mx-auto space-y-3 p-6"
     >
       <h2 className="text-2xl font-semibold">Reset Password</h2>
 
@@ -49,13 +68,15 @@ export default function ResetPassword() {
       />
 
       <FormInput
-        type="number"
+        type="text"
         label="OTP"
         {...register("otp")}
         error={errors.otp}
       />
 
-      <Button className="w-full">Reset</Button>
+      <Button disabled={isSubmitting} className="w-full">
+        Reset
+      </Button>
 
       <p className="text-center text-sm">
         Remember your password?

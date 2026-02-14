@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import DragAndDrop from "@/app/_components/DragDrop";
+import DragAndDrop from "@/app/_components/_Navbar/DragDrop";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { createUser } from "@/lib/api/admin";
