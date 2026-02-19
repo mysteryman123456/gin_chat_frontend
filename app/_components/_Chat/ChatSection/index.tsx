@@ -200,7 +200,10 @@ function ChatSection({ user }: { user: MessagedUsers | null }) {
           </div>
         </div>
         {displayUser ? (
-          <AudioCallWrapper conversation_id={user?.conversation_id!}>
+          <AudioCallWrapper
+            conversation_id={user?.conversation_id!}
+            peerName={displayName}
+          >
             <Button size={"icon"} variant={"outline"}>
               <PhoneCall />
             </Button>
