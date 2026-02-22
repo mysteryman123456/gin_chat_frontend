@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { AdminUserResponse } from "./page";
 import Image from "next/image";
+import Link from "next/link";
 
 export const adminUserColumns = ({
   onEdit,
@@ -72,13 +73,7 @@ export const adminUserColumns = ({
     header: "Actions",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => onEdit(row.original)}
-        >
-          Edit
-        </Button>
+        <Link href={`/admin/users/${row.original._id}`}>Edit</Link>
 
         <Button
           size="sm"
