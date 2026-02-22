@@ -1,4 +1,4 @@
-import { Loader, Paperclip, PhoneCall, Send, UserPlus2 } from "lucide-react";
+import { Loader, Paperclip, PhoneCall, Send } from "lucide-react";
 import { memo, useEffect, useRef, useState } from "react";
 import { MessagedUsers } from "../ChatSideBar";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,7 @@ import { fetcher } from "@/lib/api/fetcher";
 import { useAddMember } from "@/app/hooks/useAddMembers";
 import { addMembersInGroup } from "@/lib/api/conversation";
 import AudioCallWrapper from "../AudioCallWrapper";
+import { useMessageListener } from "@/hooks/useMessageListener";
 
 export type FileUrl = string | null | undefined;
 export type MessageType = {
@@ -36,7 +37,7 @@ function ChatSection({ user }: { user: MessagedUsers | null }) {
   const { user: myUser } = useAuthStore();
   const [messages, setMessages] = useState<MessageType[]>([]);
   const { setOpen, open, user_id_array, clearUserIdArray } = useAddMember();
-
+  useMessageListener(myUser?._id, user?.conversation_id);
   useJoinConversation(user?.conversation_id);
   const { data } = useQuery<MessageType[]>({
     queryKey: ["messages", user?.conversation_id!],
@@ -98,6 +99,10 @@ function ChatSection({ user }: { user: MessagedUsers | null }) {
         const newMessage = {
           sender_id: myUser?._id!,
           content: null,
+          receiver_info: {
+            by: myUser?.username,
+            receiver_id: user?.users[0]._id,
+          },
           file_url: response.data.file_url,
           type: file_type,
           conversation_id: user?.conversation_id,
@@ -121,6 +126,10 @@ function ChatSection({ user }: { user: MessagedUsers | null }) {
       content: text,
       file_url: null,
       sender_id: myUser?._id!,
+      receiver_info: {
+        by: myUser?.username,
+        receiver_id: user?.users[0]._id,
+      },
       type: "TEXT" as SendFileType,
       conversation_id: user?.conversation_id,
     };

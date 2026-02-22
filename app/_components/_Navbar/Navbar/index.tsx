@@ -18,7 +18,6 @@ export default function ChatNavbar() {
 
       <div className="flex items-center space-x-2">
         {isAuthenticated && !loading && <SearchUserDialog />}
-        <NotificationButton />
         <ThemeButton />
         <NavbarDropdown
           loading={loading}

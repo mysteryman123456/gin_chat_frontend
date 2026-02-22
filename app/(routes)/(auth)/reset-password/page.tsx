@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { resetPassword } from "@/lib/api/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -22,17 +22,15 @@ export default function ResetPassword() {
     resolver: zodResolver(reset_password_schema),
   });
 
-  const searchParams = useSearchParams();
-
   const router = useRouter();
 
   const onSubmit = async (data: ResetPasswordSchemaType) => {
     try {
-      const response = await resetPassword(
-        data.password,
-        data.otp,
-        searchParams.get("token") || "n/a"
-      );
+      const token =
+        typeof window !== "undefined"
+          ? new URLSearchParams(window.location.search).get("token") || "n/a"
+          : "n/a";
+      const response = await resetPassword(data.password, data.otp, token);
       if (response.success) {
         router.replace("/login");
         return toast.success(response.message || "Password reset successfully");

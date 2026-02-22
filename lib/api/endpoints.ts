@@ -5,6 +5,7 @@ export const API_END_POINT = {
   RESET_PASSWORD: "/auth/reset-password",
   SIGNUP: "/auth/signup",
   VERIFY_TOKEN: "/auth/verify-token",
+  UPDATE_PASSWORD: "/user/settings/password",
   PROFILE_UPDATE: "/user/profile",
   UPLOAD_FILE: "/upload/file",
   ADMIN_USERS: "/admin/users",
