@@ -18,6 +18,22 @@ export const deleteUser = async (userId: string) => {
   }
 };
 
+export const getSpecificUserById = async (userId: string) => {
+  try {
+    const response = await api.get(`${API_END_POINT.ADMIN_USERS}/${userId}`);
+    return response.data;
+  } catch (error: unknown) {
+    if (isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Failed to get user";
+      throw new Error(errorMessage);
+    }
+    throw new Error("Failed to get user");
+  }
+};
+
 export type CreateUserPayload = {
   username: string;
   email: string;
@@ -38,5 +54,31 @@ export const createUser = async (data: CreateUserPayload) => {
       throw new Error(errorMessage);
     }
     throw new Error("Failed to create user");
+  }
+};
+
+export type UpdateUserPayload = {
+  username?: string;
+  profile_image?: string;
+  role?: "user" | "admin";
+  is_blocked?: boolean;
+};
+
+export const updateUser = async (userId: string, data: UpdateUserPayload) => {
+  try {
+    const response = await api.patch(
+      `${API_END_POINT.ADMIN_USERS}/${userId}`,
+      data
+    );
+    return response.data;
+  } catch (error: unknown) {
+    if (isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Failed to update user";
+      throw new Error(errorMessage);
+    }
+    throw new Error("Failed to update user");
   }
 };

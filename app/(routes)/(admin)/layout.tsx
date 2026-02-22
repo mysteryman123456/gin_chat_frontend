@@ -1,13 +1,13 @@
 "use client";
 
-import React, { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/_components/Loader";
 import { useAuthStore } from "@/app/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
-import { Users, Settings } from "lucide-react";
+import { UserPlus, Users } from "lucide-react";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -19,7 +19,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   useEffect(() => {
     if (!loading) {
-      if (!isAuthenticated || user?.role !== "user") {
+      if (!isAuthenticated || user?.role !== "admin") {
         router.push("/login");
       }
     }
@@ -34,9 +34,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       icon: <Users className="w-4 h-4 mr-2" />,
     },
     {
-      label: "Settings",
-      href: "/admin/settings",
-      icon: <Settings className="w-4 h-4 mr-2" />,
+      label: "Create User",
+      href: "/admin/users/create",
+      icon: <UserPlus className="w-4 h-4 mr-2" />,
     },
   ];
 
