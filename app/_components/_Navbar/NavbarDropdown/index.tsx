@@ -18,7 +18,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ProfileCard from "../Profile";
 import SettingsCard from "../Settings";
 import { Button } from "@/components/ui/button";
-import { LogOut, User2, Settings } from "lucide-react";
+import { LogOut, User2, Settings, UserRound } from "lucide-react";
 import { logout } from "@/lib/api/auth";
 
 interface NavbarDropdownProps {
@@ -48,7 +48,9 @@ export default function NavbarDropdown({
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-700">
               <span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
-                {user?.username?.charAt(0)?.toUpperCase() ?? "U"}
+                {user?.username?.charAt(0)?.toUpperCase() ?? (
+                  <UserRound size={17} />
+                )}
               </span>
             </div>
           )}
@@ -86,7 +88,9 @@ export default function NavbarDropdown({
                 <p className="text-sm font-medium leading-none">
                   {user.username}
                 </p>
-                <p className="text-xs text-muted-foreground">{user.role}</p>
+                <p className="text-xs text-muted-foreground text-ellipsis truncate max-w-50">
+                  {user.email}
+                </p>
               </div>
             </div>
 

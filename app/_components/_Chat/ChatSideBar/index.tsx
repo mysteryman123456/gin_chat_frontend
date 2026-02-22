@@ -4,11 +4,11 @@ import { memo, useEffect, useState } from "react";
 import ChatAvatarSkeleton from "../ChatAvatarSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { fetcher } from "@/lib/api/fetcher";
-import { useJoinOnline } from "@/lib/socket/join_room_named_conversation_id";
 import { socket } from "@/lib/socket/socket";
 import { getLastMessageFromLocalStorage } from "@/lib/utils";
 import { useAddMember } from "@/app/hooks/useAddMembers";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useJoinOnline } from "@/lib/socket/join_room_named_conversation_id";
 
 export type MessagedUsers = {
   users: {
@@ -28,7 +28,6 @@ function Sidebar({ onChange }: { onChange: (user: MessagedUsers) => void }) {
   const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
 
   useJoinOnline(user?._id);
-
   useEffect(() => {
     if (!socket) return;
     socket.on("online_users", (data: string[]) => {

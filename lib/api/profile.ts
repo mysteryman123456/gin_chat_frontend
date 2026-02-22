@@ -7,7 +7,7 @@ export const uploadImage = async (file: File) => {
   try {
     const formData = new FormData();
     formData.append("image", file);
-    const response = await api.post(API_END_POINT.UPLOAD_IMAGE, formData, {});
+    const response = await api.post(API_END_POINT.UPLOAD_FILE, formData, {});
 
     return response.data;
   } catch (error: unknown) {
@@ -34,5 +34,25 @@ export const updateProfile = async (id: string, data: UpdateProfileData) => {
       throw new Error(errorMessage);
     }
     throw new Error("Profile update failed");
+  }
+};
+
+export const updatePassword = async (data: {
+  old_password: string;
+  new_password: string;
+  confirm_password: string;
+}) => {
+  try {
+    const response = await api.patch(API_END_POINT.UPDATE_PASSWORD, data);
+    return response.data;
+  } catch (error: unknown) {
+    if (isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Failed to update password";
+      throw new Error(errorMessage);
+    }
+    throw new Error("Failed to update password");
   }
 };
