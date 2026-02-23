@@ -4,6 +4,8 @@ import api from "./axios";
 import { API_END_POINT } from "./endpoints";
 import { isAxiosError } from "axios";
 import { LoginSchemaType } from "@/app/_validations/login_schema";
+import { logoutAction } from "@/app/actions/logout";
+import { toast } from "react-toastify";
 
 export const signup = async (data: SignupSchemaType) => {
   try {
@@ -49,17 +51,14 @@ export const login = async (data: LoginSchemaType) => {
 
 export const logout = async () => {
   try {
-    const response = await api.post(API_END_POINT.LOGOUT);
-    if (response.status === 200) {
+    const response = await logoutAction();
+    if (response.success) {
       return (window.location.href = "/");
     }
   } catch (error: unknown) {
-    if (isAxiosError(error)) {
-      const errorMessage =
-        error.response?.data.error || error.response?.data.message;
-      throw new Error(errorMessage);
-    }
-    throw new Error("Logout failed");
+    const errorMessage =
+      error instanceof Error ? error.message : "Logout failed";
+    toast.error(errorMessage);
   }
 };
 

@@ -2,6 +2,7 @@
 
 import FormInput from "@/app/_components/FormInput";
 import { LoginSchemaType, login_schema } from "@/app/_validations/login_schema";
+import { loginAction } from "@/app/actions/login";
 import { Button } from "@/components/ui/button";
 import { login } from "@/lib/api/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,9 +21,9 @@ export default function Login() {
 
   const onSubmit = async (data: LoginSchemaType) => {
     try {
-      const response = await login(data);
+      const response = await loginAction(data);
       if (response.success) {
-        toast.success(response?.message || "User logged in successfully");
+        toast.success("User logged in successfully");
         return (window.location.href = "/");
       }
     } catch (error: unknown) {
