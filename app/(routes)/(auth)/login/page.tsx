@@ -14,7 +14,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(login_schema),
   });
@@ -64,7 +64,9 @@ export default function Login() {
         </Link>
       </p>
 
-      <Button className="w-full">Login</Button>
+      <Button disabled={isSubmitting} className="w-full">
+        Login
+      </Button>
 
       <p className="text-center text-sm">
         Don't have an account?{" "}
