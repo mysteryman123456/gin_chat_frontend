@@ -50,7 +50,7 @@ function Sidebar({ onChange }: { onChange: (user: MessagedUsers) => void }) {
   });
 
   return (
-    <aside className="min-w-80 border-r relative border-gray-200 dark:border-[#1e1f22] bg-white dark:bg-[#2b2d31] flex flex-col">
+    <aside className="min-w-80 h-screen overflow-y-scroll border-r relative border-gray-200 dark:border-[#1e1f22] bg-white dark:bg-[#2b2d31] flex flex-col">
       {(sessionLoading || isLoading) && <ChatAvatarSkeleton />}
       {!isAuthenticated && !sessionLoading && <></>}
       {isAuthenticated && !isLoading && (
