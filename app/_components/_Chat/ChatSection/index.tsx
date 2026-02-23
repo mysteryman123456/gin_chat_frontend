@@ -18,7 +18,7 @@ import { fetcher } from "@/lib/api/fetcher";
 import { useAddMember } from "@/app/hooks/useAddMembers";
 import { addMembersInGroup } from "@/lib/api/conversation";
 import AudioCallWrapper from "../AudioCallWrapper";
-import { useMessageListener } from "@/hooks/useMessageListener";
+import { useMessageListener } from "@/app/hooks/useMessageListener";
 
 export type FileUrl = string | null | undefined;
 export type MessageType = {
