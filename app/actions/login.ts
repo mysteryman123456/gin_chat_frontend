@@ -9,13 +9,7 @@ export const loginAction = async (data: LoginSchemaType) => {
     const response = await login(data);
     const cookieStore = await cookies();
     if (!response.data.token) throw new Error("Token not found in response");
-    cookieStore.set("token", response.data.token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-    });
+    cookieStore.set({ name: "token", value: response.data.token });
 
     return { success: true };
   } catch (error: any) {
